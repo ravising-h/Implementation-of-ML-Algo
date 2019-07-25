@@ -1,5 +1,6 @@
-# **K-Nearest-Neighbors**
-Implementing KNN using python and numpy.
+# IMPLEMENTATION OF ML ALGORITHM
+Implementing using python and numpy.
+* KNN
+* Multivariable Linear Regression
 
-##### `classifier = KNN(k,train,label, test)`
-##### `Prediction = classifier.KNN()`
+
