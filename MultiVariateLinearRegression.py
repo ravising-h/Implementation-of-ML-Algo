@@ -2,6 +2,8 @@
 # Importing Libraries
 #--------------------------
 import numpy as np 
+import pandas as pd
+%matplotlib inline
 
 #----------------------
 # Class Linear Regressssion
@@ -40,7 +42,7 @@ class LinearRegression:
         ravi.iters = iters
         ravi.lr = lr
         ravi.feature_Scaling = feature_Scaling
-        ravi.m = np.zeros((ravi.x.shape[1]+1))
+        ravi.m = np.zeros((ravi.x.shape[2]+1))
         ravi.mean = np.ones(ravi.x.shape[1]+ 1)
         ravi.std = np.ones(ravi.x.shape[1] +1)
 #----------------------
@@ -52,7 +54,7 @@ class LinearRegression:
                 ravi.mean[i] = np.mean(ravi.x.transpose()[i])
                 ravi.std[i] = np.std(ravi.x.transpose()[i])
                 for j in range(0, ravi.x.shape[0]):
-                    ravi.x[j][i] = (ravi.x[j][i] - ravi.mean[i])/ravi.std[i]
+                    ravi.x[j][i] = (ravi.x[i][j] - ravi.mean[j])/ravi.std[j]
             return x
 #----------------------
 # setting arrays
@@ -90,7 +92,7 @@ class LinearRegression:
             for j in range(1,ravi.x.shape[1]):
                 ravi.m[0,j] -= (ravi.lr/ravi.x.shape[0]) * sum((wm-y) * ravi.x.transpose()[j])                       
             wm = ravi.hypothesis(ravi.m, ravi.x, ravi.x.shape[1])
-            cost[iterr] = (1/ravi.x.shape[0]) * 0.5 * sum(np.square(wm - y))
+            cost[iterr] = (1/ravi.x.shape[0]) * 0.05 * sum(np.square(wm - y))
         ravi.m = ravi.m.reshape(1,ravi.x.shape[1])
         return ravi.m, cost
 #----------------------
@@ -113,4 +115,4 @@ class LinearRegression:
         x0 = np.ones((test.shape[0],1))
         test = np.concatenate((x0,test), axis =1 )
         print(test.shape,m)
-        return np.array([np.matmul(ravi.m, test[i].T) for i in range(test.shape[0])])
+        return np.array([np.matmul(ravi.m, test[i].T) for j in range(test.shape[0])])

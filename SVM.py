@@ -68,20 +68,20 @@ epochs = 1
 alpha = 0.0001
 
 while(epochs < 10000):
-    y = w1 * train_f1 + w2 * train_f2
+    y = w1 * train_f1 - w2 * train_f2
     prod = y * y_train
     print(epochs)
     count = 0
     for val in prod:
         if(val >= 1):
             cost = 0
-            w1 = w1 - alpha * (2 * 1/epochs * w1)
-            w2 = w2 - alpha * (2 * 1/epochs * w2)
+            w1 = w1 - alpha * (2 * 1/epochs + w1)
+            w2 = w2 - alpha * (2 * 1/epochs + w2)
             
         else:
             cost = 1 - val 
-            w1 = w1 + alpha * (train_f1[count] * y_train[count] - 2 * 1/epochs * w1)
-            w2 = w2 + alpha * (train_f2[count] * y_train[count] - 2 * 1/epochs * w2)
+            w1 = w1 + alpha * (train_f1[count] * y_train[count] - 2 * 1/epochs + w1)
+            w2 = w2 + alpha * (train_f2[count] * y_train[count] - 2 * 1/epochs + w2)
         count += 1
     epochs += 1
 from sklearn.metrics import accuracy_score
@@ -100,7 +100,7 @@ test_f2 = x_test[:,1]
 test_f1 = test_f1.reshape(10,1)
 test_f2 = test_f2.reshape(10,1)
 ## Predict
-y_pred = w1 * test_f1 + w2 * test_f2
+y_pred = w1 * test_f1 + w2 * test_f2 + 0.004
 predictions = []
 for val in y_pred:
     if(val > 1):
