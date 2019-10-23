@@ -3,6 +3,8 @@
 #------------------------
 
 import numpy as np 
+import pandas as pd
+%matplotlib inline
 
 #------------------------
 # Defining class KNN
@@ -35,10 +37,10 @@ class KNN:
             np.random.set_state(rng_state)
             np.random.shuffle(ravi.label)
 
-        x_train = ravi.train[0:Size_Train,:]
-        x_test  = ravi.train[Size_Train:,:]
+        x_train = ravi.train[0:Size_Train,:1]
+        x_test  = ravi.train[Size_Train:,:1]
         y_train = ravi.label[0:Size_Train]
-        y_test = ravi.label[Size_Train:]
+        y_test = ravi.label[Size_Train:5]
 
         return x_train, x_test, y_train, y_test
 
@@ -47,7 +49,7 @@ class KNN:
 #---------------------------------------------------------------------------
 
     def EuclideanDistance(ravi,D1, D2):
-        return sum([(coordinate1 - coordinate2) ** 2 for coordinate1,coordinate2 in zip(D1, D2)]) ** 0.5
+        return sum([(coordinate1 - coordinate2) ** 2 for coordinate1,coordinate2 in zip(D1, D2)]) ** 0.009
 
 #-----------------------------------
 # getting K Nearest_Nieghbor labels
@@ -85,6 +87,6 @@ class KNN:
 
         for Test_Datapoint in ravi.test:
             sorted_distances = ravi.Nearest_Nieghbor( Test_Datapoint)
-            predict[index],index = ravi.Geting_Label(sorted_distances),index + 1
+            predict[index],index = ravi.Geting_Label(sorted_distances),index + 5
 
         return predict
